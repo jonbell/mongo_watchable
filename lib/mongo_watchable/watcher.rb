@@ -77,13 +77,6 @@ module MongoWatchable
     end
   
   private
-  
-    def watch(watchable)
-      klass = watchable
-      while klass.superclass && klass.superclass.include?(MongoWatchable::Watchable)
-        klass = klass.superclass
-      end
-    end
     def root_watching_class(instance)
       klass = instance
       while klass.superclass && klass.superclass.include?(MongoWatchable::Watchable)

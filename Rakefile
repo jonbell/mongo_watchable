@@ -1,3 +1,10 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+desc 'Default: run unit tests.'
+task :default => :test
+
 begin
   GEM = "mongo_watchable"
   AUTHOR = "Jonathan Bell"
@@ -26,9 +33,27 @@ begin
     # Development dependencies. Not installed by default.
     # Install with: sudo gem install formtastic --development
     #s.add_development_dependency 'rspec-rails', '>= 1.2.6'
+    s.add_development_dependency 'shoulda', '>= 2.10.0'
   end
   
   Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "[mongo_watchable:] Jeweler - or one of its dependencies - is not available. Install it with: sudo gem install jeweler -s http://gemcutter.org"
+end
+
+desc 'Test the mongo_watchable plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+desc 'Generate documentation for the mongo_watchable plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'Mongo Watchable'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README')
+  rdoc.rdoc_files.include('lib/**/*.rb')
 end
