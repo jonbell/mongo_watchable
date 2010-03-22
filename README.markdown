@@ -51,3 +51,6 @@ Return count of all users watching widget:
 
     widget.user_watchers.count
 
+Unwatch a widget
+
+    user.unwatch(widget)
