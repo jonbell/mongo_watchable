@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mongo_watchable}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jonathan Bell"]
-  s.date = %q{2010-03-22}
+  s.date = %q{2010-03-25}
   s.description = %q{A ruby gem for adding watching to mongo documents.}
   s.email = %q{jonbell@spamcop.net}
   s.extra_rdoc_files = [
