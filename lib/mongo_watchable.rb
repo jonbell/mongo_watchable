@@ -8,5 +8,6 @@ module MongoWatchable
   end
 end
 
+$LOAD_PATH << File.dirname(__FILE__)
 ActiveSupport::Dependencies.load_paths << File.dirname(__FILE__)
 ActiveSupport::Dependencies.load_once_paths.delete(File.dirname(__FILE__))
