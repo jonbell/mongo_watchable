@@ -20,7 +20,7 @@ module MongoWatchable
           end
         end
       end
-      MongoWatchable.watchables << watchable
+      MongoWatchable.register_watchable watchable
     end
   
     def watchers_proxy_for(watcher)

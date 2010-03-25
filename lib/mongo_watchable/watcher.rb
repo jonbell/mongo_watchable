@@ -2,7 +2,7 @@ module MongoWatchable
   module Watcher
     def self.included(watcher)
       watcher.class_eval do
-        MongoWatchable.watchables do |watchable|
+        MongoWatchable.watchables.each do |watchable|
           key :"#{watchable.name.underscore}_watching_ids", Array
           
           define_method :"#{watchable.name.underscore}_watchings" do
@@ -21,7 +21,7 @@ module MongoWatchable
         end
       end
       
-      MongoWatchable.watchers << watcher
+      MongoWatchable.register_watcher watcher
     end
     
     def watch(watchable)
