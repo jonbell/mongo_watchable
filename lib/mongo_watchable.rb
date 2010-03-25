@@ -1,7 +1,3 @@
-require 'mongo_watchable/proxy'
-require 'mongo_watchable/watcher'
-require 'mongo_watchable/watchable'
-
 module MongoWatchable
   def self.watchables
     @watchables ||= []
@@ -11,3 +7,6 @@ module MongoWatchable
     @watchers ||= []
   end
 end
+
+ActiveSupport::Dependencies.load_paths << File.dirname(__FILE__)
+ActiveSupport::Dependencies.load_once_paths.delete(File.dirname(__FILE__))
