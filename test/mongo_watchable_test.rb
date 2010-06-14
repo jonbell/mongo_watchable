@@ -38,16 +38,24 @@ class MongoWatchableTest < ActiveSupport::TestCase
       @widget.reload
     end
     
-    should "should only have 1 widget in widget_watchings array" do
+    should "only have 1 widget in widget_watchings array" do
       assert_equal 1, @user.widget_watchings.size
     end
     
-    should "should have widget in widget watchings array" do
+    should "increment widget_watchings_count" do
+      assert_equal 1, @user.widget_watchings_count
+    end
+    
+    should "have widget in widget watchings array" do
       assert_equal @widget, @user.widget_watchings.first
     end
     
     should "have only one watcher in widgets user_watchers array" do
       assert_equal 1, @widget.user_watchers.size
+    end
+    
+    should "increment user_watchers_count" do
+      assert_equal 1, @widget.user_watchers_count
     end
     
     should "be the watcher in widgets user_watchers array" do
@@ -84,20 +92,28 @@ class MongoWatchableTest < ActiveSupport::TestCase
         assert @return
       end
     
-      should "should only have 2 widgets in widget_watchings array" do
+      should "only have 2 widgets in widget_watchings array" do
         assert_equal 2, @user.widget_watchings.size
       end
+    
+      should "increment widget_watchings_count" do
+        assert_equal 2, @user.widget_watchings_count
+      end
       
-      should "should have widget in widget watchings array" do
+      should "have widget in widget watchings array" do
         assert_equal @widget, @user.widget_watchings.first
       end
       
-      should "should have widget2 in widget watchings array" do
+      should "have widget2 in widget watchings array" do
         assert_equal @widget2, @user.widget_watchings.last
       end
     
       should "have only one watcher in widget's user_watchers array" do
         assert_equal 1, @widget.user_watchers.size
+      end
+    
+      should "not increment user_watchers_count" do
+        assert_equal 1, @widget.user_watchers_count
       end
       
       should "be the watcher in widget's user_watchers array" do
@@ -127,6 +143,14 @@ class MongoWatchableTest < ActiveSupport::TestCase
       should "have no user_watchers in widget" do
         assert @widget.user_watchers.empty?
       end
+      
+      should "have 0 widget_watchings_count" do
+        assert_equal 0, @user.widget_watchings_count
+      end
+      
+      should "have 0 user_watchers_count" do
+        assert_equal 0, @widget.user_watchers_count
+      end
     
       should "return with true" do
         assert @return
@@ -144,16 +168,24 @@ class MongoWatchableTest < ActiveSupport::TestCase
       @widget.reload
     end
     
-    should "should only have 1 widget in widget_watchings array" do
+    should "only have 1 widget in widget_watchings array" do
       assert_equal 1, @user.widget_watchings.size
     end
     
-    should "should have widget in widget watchings array" do
+    should "increment widget_watchings_count" do
+      assert_equal 1, @user.widget_watchings_count
+    end
+    
+    should "have widget in widget watchings array" do
       assert_equal @widget, @user.widget_watchings.first
     end
     
     should "have only one watcher in widgets user_watchers array" do
       assert_equal 1, @widget.user_watchers.size
+    end
+    
+    should "increment user_watchers_count" do
+      assert_equal 1, @widget.user_watchers_count
     end
     
     should "be the watcher in widgets user_watchers array" do
@@ -172,20 +204,28 @@ class MongoWatchableTest < ActiveSupport::TestCase
         @widget2.reload
       end
     
-      should "should only have 2 widgets in widget_watchings array" do
+      should "have 2 widgets in widget_watchings array" do
         assert_equal 2, @user.widget_watchings.size
       end
+    
+      should "increment widget_watchings_count" do
+        assert_equal 2, @user.widget_watchings_count
+      end
       
-      should "should have widget in widget watchings array" do
+      should "have widget in widget watchings array" do
         assert_equal @widget, @user.widget_watchings.first
       end
       
-      should "should have widget2 in widget watchings array" do
+      should "have widget2 in widget watchings array" do
         assert_equal @widget2, @user.widget_watchings.last
       end
     
-      should "have only one watcher in widget's user_watchers array" do
+      should "have one watcher in widget's user_watchers array" do
         assert_equal 1, @widget.user_watchers.size
+      end
+    
+      should "not increment user_watchers_count" do
+        assert_equal 1, @widget.user_watchers_count
       end
       
       should "be the watcher in widget's user_watchers array" do
@@ -222,6 +262,14 @@ class MongoWatchableTest < ActiveSupport::TestCase
       
       should "have no user_watchers in widget" do
         assert @widget.user_watchers.empty?
+      end
+      
+      should "have 0 widget_watchings_count" do
+        assert_equal 0, @user.widget_watchings_count
+      end
+      
+      should "have 0 user_watchers_count" do
+        assert_equal 0, @widget.user_watchers_count
       end
     end
   end

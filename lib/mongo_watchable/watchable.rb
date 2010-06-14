@@ -4,9 +4,10 @@ module MongoWatchable
       watchable.class_eval do
         MongoWatchable.watchers.each do |watcher|
           key :"#{watcher.name.underscore}_watcher_ids", Array
+          key :"#{watcher.name.underscore}_watchers_count", Integer, :default => 0, :index => true
           
           define_method :"#{watcher.name.underscore}_watchers" do
-            MongoWatchable::Proxy.new(self, :"#{watcher.name.underscore}_watcher_ids", watcher)
+            MongoWatchable::Proxy.new(self, :"#{watcher.name.underscore}_watcher_ids", :"#{watcher.name.underscore}_watchers_count", watcher)
           end
         end
       end
@@ -14,9 +15,10 @@ module MongoWatchable
       MongoWatchable.watchers.each do |watcher|
         watcher.class_eval do
           key :"#{watchable.name.underscore}_watching_ids", Array
+          key :"#{watchable.name.underscore}_watchings_count", Integer, :default => 0, :index => true
           
           define_method :"#{watchable.name.underscore}_watchings" do
-            MongoWatchable::Proxy.new(self, :"#{watchable.name.underscore}_watching_ids", watchable)
+            MongoWatchable::Proxy.new(self, :"#{watchable.name.underscore}_watching_ids", :"#{watchable.name.underscore}_watchings_count", watchable)
           end
         end
       end
