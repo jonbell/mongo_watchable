@@ -239,6 +239,12 @@ class MongoWatchableTest < ActiveSupport::TestCase
       should "be the watcher in widget2's user_watchers array" do
         assert_equal @user, @widget2.user_watchers.first
       end
+      
+      should "return correct widget with call to all with opts" do
+        widgets = @user.widget_watchings.all(:name => @widget.name)
+        assert_equal 1, widgets.size
+        assert_equal @widget, widgets.first
+      end
     end
     
     context "and then watches widget again" do

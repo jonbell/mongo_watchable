@@ -18,7 +18,8 @@ module MongoWatchable
     end
     
     def all(opts = {})
-      fetch_all
+      return fetch_all if opts.empty?
+      target_class.all(opts.merge(:id.in => array))
     end
     
     def each(&block)
