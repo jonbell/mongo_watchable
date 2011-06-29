@@ -28,7 +28,7 @@ begin
     
     # Runtime dependencies: When installing Formtastic these will be checked if they are installed.
     # Will be offered to install these if they are not already installed.
-    s.add_dependency 'mongo_mapper', '>= 0.7.0'
+    #s.add_dependency 'mongo_mapper', '>= 0.7.0'
     
     # Development dependencies. Not installed by default.
     # Install with: sudo gem install formtastic --development
