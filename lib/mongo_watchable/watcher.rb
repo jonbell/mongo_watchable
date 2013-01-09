@@ -3,24 +3,26 @@ module MongoWatchable
     def self.included(watcher)
       watcher.class_eval do
         MongoWatchable.watchables.each do |watchable|
-          key :"#{watchable.name.underscore}_watching_ids", Array
-          key :"#{watchable.name.underscore}_watchings_count", Integer, :default => 0
-          ensure_index :"#{watchable.name.underscore}_watchings_count"
+          watchable_key_prefix = watchable.name.underscore.gsub(/\//, '_')
+          key :"#{watchable_key_prefix}_watching_ids", Array
+          key :"#{watchable_key_prefix}_watchings_count", Integer, :default => 0
+          ensure_index :"#{watchable_key_prefix}_watchings_count"
           
-          define_method :"#{watchable.name.underscore}_watchings" do
-            MongoWatchable::Proxy.new(self, :"#{watchable.name.underscore}_watching_ids", :"#{watchable.name.underscore}_watchings_count", watchable)
+          define_method :"#{watchable_key_prefix}_watchings" do
+            MongoWatchable::Proxy.new(self, :"#{watchable_key_prefix}_watching_ids", :"#{watchable_key_prefix}_watchings_count", watchable)
           end
         end
       end
       
       MongoWatchable.watchables.each do |watchable|
         watchable.class_eval do
-          key :"#{watcher.name.underscore}_watcher_ids", Array
-          key :"#{watcher.name.underscore}_watchers_count", Integer, :default => 0
-          ensure_index :"#{watcher.name.underscore}_watchers_count"
+          watcher_key_prefix = watcher.name.underscore.gsub(/\//, '_')
+          key :"#{watcher_key_prefix}_watcher_ids", Array
+          key :"#{watcher_key_prefix}_watchers_count", Integer, :default => 0
+          ensure_index :"#{watcher_key_prefix}_watchers_count"
           
-          define_method :"#{watcher.name.underscore}_watchers" do
-            MongoWatchable::Proxy.new(self, :"#{watcher.name.underscore}_watcher_ids", :"#{watcher.name.underscore}_watchers_count", watcher)
+          define_method :"#{watcher_key_prefix}_watchers" do
+            MongoWatchable::Proxy.new(self, :"#{watcher_key_prefix}_watcher_ids", :"#{watcher_key_prefix}_watchers_count", watcher)
           end
         end
       end
@@ -69,7 +71,8 @@ module MongoWatchable
       while klass.superclass && klass.superclass.include?(MongoWatchable::Watchable)
         klass = klass.superclass
       end
-      send("#{klass.name.underscore}_watching_ids")
+      watchable_key_prefix = klass.name.underscore.gsub(/\//, '_')
+      send("#{watchable_key_prefix}_watching_ids")
     end
     
     def watchings_proxy_for(watchable)
@@ -77,7 +80,8 @@ module MongoWatchable
       while klass.superclass && klass.superclass.include?(MongoWatchable::Watchable)
         klass = klass.superclass
       end
-      send("#{klass.name.underscore}_watchings")
+      watchable_key_prefix = klass.name.underscore.gsub(/\//, '_')
+      send("#{watchable_key_prefix}_watchings")
     end
     
     def watchings_count_proxy_for(watchable)
@@ -85,7 +89,8 @@ module MongoWatchable
       while klass.superclass && klass.superclass.include?(MongoWatchable::Watchable)
         klass = klass.superclass
       end
-      send("#{klass.name.underscore}_watchings")
+      watchable_key_prefix = klass.name.underscore.gsub(/\//, '_')
+      send("#{watchable_key_prefix}_watchings")
     end
   
   private
